@@ -1,3 +1,9 @@
-jupyterhub
+.ipynb_checkpoints/
+.ipython/
+.ivy2/
+.jupyter/
+.local/
+.npm/
+.cache/
+notebooks/.cache/
 notebooks/env
-notebooks/.*

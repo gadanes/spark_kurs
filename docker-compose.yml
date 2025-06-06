@@ -1,32 +1,8 @@
-version: '3.8'
-
 services:
   jupyter:
-    build:
-      context: .
-    container_name: jupyter_notebook
+    build: .
     ports:
-      - "8888:8888"
+      - 8888:8888
     volumes:
-      - ./notebooks:/home/jovyan/
-    environment:
-      - JUPYTER_TOKEN=your_secure_token
-      - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-      - PYSPARK_PYTHON=python3
-      - PYSPARK_DRIVER_PYTHON=python3
-    command: start-notebook.sh --NotebookApp.token=${JUPYTER_TOKEN}
-
-  postgres:
-    image: postgres:13
-    container_name: postgres
-    environment:
-      POSTGRES_DB: sampledb
-      POSTGRES_USER: sampleuser
-      POSTGRES_PASSWORD: samplepass
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-
-volumes:
-  notebooks:
+      - ./:/home/jovyan/
+    command: "start-notebook.sh --ServerApp.token=''"

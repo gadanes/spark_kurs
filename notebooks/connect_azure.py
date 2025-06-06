@@ -17,8 +17,6 @@ import os
 
 # Load variables from .env into os.environ
 load_dotenv("env")
-
-
 server_name = os.environ.get("SERVERNAME")
 database_name = os.environ.get("DATABASENAME")
 username = os.environ.get("USERNAME")
