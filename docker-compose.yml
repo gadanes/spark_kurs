@@ -2,7 +2,23 @@ services:
   jupyter:
     build: .
     ports:
-      - 8888:8888
+      # JupyterLab
+      - "8888:8888"
+      # Spark Driver UI: first job uses 4040, next 4041, etc.
+      - "4040-4050:4040-4050"
+      # (optional) Spark History Server UI
+      - "18080:18080"
     volumes:
       - ./:/home/jovyan/
-    command: "start-notebook.sh --ServerApp.token=''"
+      # optional: persist event-logs across container restarts
+      - spark-history:/home/jovyan/spark-history
+    environment:
+      # let Spark write event logs so the history server can read them
+      - SPARK_EVENTLOG_ENABLED=true
+      - SPARK_EVENTLOG_DIR=file:/home/jovyan/spark-history
+      # pin the first UI port so it’s predictable (optional)
+      - SPARK_UI_PORT=4040
+    command: >
+      start-notebook.sh --ServerApp.token=''
+volumes:
+  spark-history:
